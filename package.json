@@ -1,0 +1,26 @@
+{
+  "name": "my_app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/core": "^8.3.1",
+    "@capacitor/geolocation": "^8.2.0",
+    "@capacitor/ios": "^8.3.1",
+    "@nuxt/image": "^2.0.0",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "nuxt": "^4.4.2",
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.4"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.3.1"
+  }
+}
