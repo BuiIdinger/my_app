@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   ssr: false,
   nitro: {
-    preset: "static", // cloudflare_pages
+    preset: "cloudflare_pages_static", // cloudflare_pages
   },
   image: {
     // quality: 80,
