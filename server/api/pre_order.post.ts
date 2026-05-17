@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     return { success: false, data: { message: "Method not allowed", }};
   }
 
-  const db = event.context.cloudflare?.env?.DB || (globalThis as any).__miniflare__?.bindings?.DB
+  const db = event.context.cloudflare?.env?.db || (globalThis as any).__miniflare__?.bindings?.db;
   if (!db) {
     setResponseStatus(event, 500);
     return { success: false, data: { message: "Internal Server Error qwe", }};

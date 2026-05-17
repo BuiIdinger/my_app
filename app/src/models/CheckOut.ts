@@ -57,16 +57,7 @@ export const check_out = async (): Promise<void> => {
       }
     });
 
-    if (!response) {
-      Notification.open("Failed to pre-order, please try again later");
-      set_page(Page.Details);
-      return;
-    }
-
-    const responseData: any = response._data;
-
-    // Explicitly check: HTTP Status must be 200 AND success flag must be true
-    if (response.status === 200 && responseData?.success === true) {
+    if (response?.success === true) {
       set_page(Page.Confirmed);
     } else {
       Notification.open("Failed to pre-order, please try again later");
