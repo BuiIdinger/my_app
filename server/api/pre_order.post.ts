@@ -41,7 +41,12 @@ export default defineEventHandler(async (event) => {
     ).run();
 
 
-    const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN || '');
+    const token = process.env.POSTMARK_SERVER_TOKEN;
+    if (!token) {
+      throw new Error("POSTMARK_SERVER_TOKEN is missing from environment variables");
+    }
+
+    const client = new ServerClient(token);
 
     const msg: Message = {
       To: email,          // Change to your recipient
