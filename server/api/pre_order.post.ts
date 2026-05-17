@@ -46,17 +46,34 @@ export default defineEventHandler(async (event) => {
       throw new Error("POSTMARK_SERVER_TOKEN is missing from environment variables");
     }
 
-    const client = new ServerClient(token);
-
-    const msg: Message = {
-      To: email,          // Change to your recipient
-      From: "noreply@fluffings.co.nz",  // Must be a verified sender/domain in Postmark
-      Subject: "Sending with Postmark is Fun",
-      TextBody: "and easy to do anywhere, even with TypeScript",
-      HtmlBody: "<strong>and easy to do anywhere, even with TypeScript</strong>",
-    };
-
-    await client.sendEmail(msg);
+    await $fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: {
+        personalizations: [
+          {
+            to: [{ email: email }]
+          }
+        ],
+        from: {
+          email: "noreply@fluffings.co.nz" // Make sure this matches your verified Sender in SendGrid
+        },
+        subject: "Sending with SendGrid API is Fun",
+        content: [
+          {
+            type: 'text/plain',
+            value: 'and easy to do anywhere, even with a raw HTTP fetch request'
+          },
+          {
+            type: 'text/html',
+            value: '<strong>and easy to do anywhere, even with a raw HTTP fetch request</strong>'
+          }
+        ]
+      }
+    });
 
     setResponseStatus(event, 200);
     return { success: true, data: { message: "Order placed" } };
