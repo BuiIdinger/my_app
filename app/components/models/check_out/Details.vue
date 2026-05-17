@@ -44,5 +44,4 @@
 <script setup lang="ts">
 import * as CheckOut from "~/src/models/CheckOut";
 import BaseInput from "~/components/base/Input";
-import {error_message} from "~/src/models/CheckOut";
 </script>
