@@ -6,9 +6,10 @@
 </template>
 
 <style lang="css">
-//class=""
-//@touchstart=""
-//@touchend=""
+/*
+class=""
+@touchstart=""
+@touchend="" */
 input, textarea, button, select, a {
   -webkit-tap-highlight-color: transparent;
 }
