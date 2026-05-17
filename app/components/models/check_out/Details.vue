@@ -7,7 +7,7 @@
     <div class="pt-[50px] w-full flex flex-col gap-y-[30px]">
       <BaseInput
         v-model:input_value="CheckOut.email_address.value"
-        placeholder="Email address (@bdsc.school.nz)"
+        placeholder="Email address (@my.bdsc.school.nz)"
         input_mode="email"
         :error_message="CheckOut.error_message.value"
       />

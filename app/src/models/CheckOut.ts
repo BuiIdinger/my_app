@@ -41,8 +41,8 @@ export const check_out = async (): Promise<void> => {
     VueUse.set(error_message, "Email address cannot be empty");
     return;
   }
-  if (VueUse.get(email_address).indexOf("@bdsc.school.nz") === -1) {
-    VueUse.set(error_message, "Email address must end in @bdsc.school.nz");
+  if (VueUse.get(email_address).indexOf("@my.bdsc.school.nz") === -1) {
+    VueUse.set(error_message, "Email address must end in @my.bdsc.school.nz");
     return;
   }
 
