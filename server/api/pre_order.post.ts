@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
     })
     .catch((error: any) => {
       setResponseStatus(event, 500);
-      return { success: false, data: { message: "Internal Server Error qwe" }};
+      return { success: false, data: { message: "Internal Server Error qweeee" }};
     });
 
     // const external_request = await $fetch(`https://api.external-service.com/users/${userId}/payout`, {
@@ -72,7 +72,6 @@ export default defineEventHandler(async (event) => {
   } catch (error: any) {
     console.error("Database Error:", error);
     setResponseStatus(event, 500);
-    return { success: false, data: { message: "Internal Server Error" },
-    }
+    return { success: false, data: { message: "Internal Server Error aaa" }}
   }
 });
