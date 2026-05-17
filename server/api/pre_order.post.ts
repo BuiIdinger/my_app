@@ -72,6 +72,6 @@ export default defineEventHandler(async (event) => {
   } catch (error: any) {
     console.error("Database Error:", error);
     setResponseStatus(event, 500);
-    return { success: false, data: { message: "Internal Server Error aaa" }}
+    return { success: false, data: { error: error, message: "Internal Server Error aaa" }}
   }
 });
