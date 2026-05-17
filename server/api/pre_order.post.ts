@@ -61,6 +61,9 @@ export default defineEventHandler(async (event) => {
       return { success: false, data: { message: "Internal Server Error qweeee" }};
     });
 
+    setResponseStatus(event, 200);
+    return { success: true, data: { message: "Order placed" } };
+
     // const external_request = await $fetch(`https://api.external-service.com/users/${userId}/payout`, {
     //   method: 'GET',
     //   headers: {
