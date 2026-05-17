@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
 import * as ProductPreview from "~/src/models/ProductPreview";
 import type { Product } from "~/src/Product";
 
