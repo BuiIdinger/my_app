@@ -4,11 +4,12 @@ import { Message, ServerClient } from 'postmark';
 export default defineEventHandler(async (event) => {
   const method  = getMethod(event)
   if (method !== "POST") {
-    setResponseStatus(event, 400);
+    setResponseStatus(event, 405);
     return { success: false, data: { message: "Method not allowed", }};
   }
 
-  const db = event.context.cloudflare?.env?.db || (globalThis as any).__miniflare__?.bindings?.db;
+  const cloudflareEnv = event.context.cloudflare?.env || (globalThis as any).__miniflare__?.bindings;
+  const db = cloudflareEnv?.db;
   if (!db) {
     setResponseStatus(event, 500);
     return { success: false, data: { message: "Internal Server Error qwe" }};
@@ -40,8 +41,7 @@ export default defineEventHandler(async (event) => {
       new Date().toISOString()
     ).run();
 
-
-    const token = process.env.POSTMARK_SERVER_TOKEN;
+    const token = cloudflareEnv?.POSTMARK_SERVER_TOKEN;
     if (!token) {
       throw new Error("POSTMARK_SERVER_TOKEN is missing from environment variables");
     }
@@ -56,24 +56,10 @@ export default defineEventHandler(async (event) => {
       HtmlBody: "<strong>and easy to do anywhere, even with TypeScript</strong>",
     };
 
-    client.sendEmail(msg).then(() => {
-      setResponseStatus(event, 200);
-      return { success: true, data: { message: "Order placed" } };
-    })
-    .catch((error: any) => {
-      setResponseStatus(event, 500);
-      return { success: false, data: { message: "Internal Server Error qweeee" }};
-    });
+    await client.sendEmail(msg);
 
     setResponseStatus(event, 200);
     return { success: true, data: { message: "Order placed" } };
-
-    // const external_request = await $fetch(`https://api.external-service.com/users/${userId}/payout`, {
-    //   method: 'GET',
-    //   headers: {
-    //     Authorization: `Bearer ${process.env.EXTERNAL_API_KEY}`
-    //   }
-    // });
   } catch (error: any) {
     console.error("Database Error:", error);
     setResponseStatus(event, 500);
