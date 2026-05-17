@@ -6,7 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "nuxt build && wrangler pages dev .output/public",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^8.3.1",
-    "nitro-cloudflare-dev": "^0.2.2",
     "wrangler": "^4.92.0"
   }
 }

@@ -7,10 +7,10 @@ export default defineEventHandler(async (event) => {
     return { success: false, data: { message: "Method not allowed", }};
   }
 
-  const db = event.context.cloudflare?.env?.DB
+  const db = event.context.cloudflare?.env?.DB || (globalThis as any).__miniflare__?.bindings?.DB
   if (!db) {
     setResponseStatus(event, 500);
-    return { success: false, data: { message: "Internal Server Error", }};
+    return { success: false, data: { message: "Internal Server Error qwe", }};
   }
 
   try {
@@ -20,16 +20,14 @@ export default defineEventHandler(async (event) => {
       return { success: false, data: { message: "Body not found", }};
     }
 
-    const products = body.products;
+    const { products, email } = body;
     if (!products) {
       setResponseStatus(event, 400);
-      return { success: false, data: { message: "Products not found", }};
+      return { success: false, data: { message: "Products not found" }};
     }
-
-    const email = body.email;
     if (!email) {
       setResponseStatus(event, 400);
-      return {success: false, data: {message: "Email not found",}};
+      return { success: false, data: { message: "Email not found" }};
     }
 
     await db.prepare(
@@ -37,7 +35,7 @@ export default defineEventHandler(async (event) => {
     ).bind(
       UUID.v7(),
       email,
-      products,
+      JSON.stringify(products),
       new Date().toISOString()
     ).run()
 
@@ -52,6 +50,7 @@ export default defineEventHandler(async (event) => {
     return { success: true, data: { message: "Order placed" },
     }
   } catch (error: any) {
+    console.error("Database Error:", error);
     setResponseStatus(event, 500);
     return { success: false, data: { message: "Internal Server Error" },
     }

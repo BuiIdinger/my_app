@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   ssr: false,
   nitro: {
-    preset: "cloudflare_pages",
+    preset: "static", // cloudflare_pages
   },
   image: {
     // quality: 80,
@@ -26,13 +26,11 @@ export default defineNuxtConfig({
   }, */
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
-  modules: ['@nuxt/image', '@nuxtjs/tailwindcss', "nitro-cloudflare-dev"],
+  modules: ['@nuxt/image', '@nuxtjs/tailwindcss'],
   tailwindcss: {
     exposeConfig: true,
   },
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-    },
+  experimental: {
+    viteEnvironmentApi: true,
   },
 })

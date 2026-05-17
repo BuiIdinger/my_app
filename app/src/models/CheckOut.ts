@@ -1,6 +1,7 @@
 import { computed, ref } from "vue";
 import * as VueUse from "@vueuse/core";
 import * as Cart from "~/src/Cart";
+import * as Notification from "~/src/Notification";
 
 export enum Page {
   Details,
@@ -48,7 +49,7 @@ export const check_out = async (): Promise<void> => {
   set_page(Page.Loading);
 
   try {
-    const response: any = await $fetch("/api/payout", {
+    const response: any = await $fetch("/api/pre_order", {
       method: "POST",
       body: {
         email: email_address.value,
@@ -57,17 +58,23 @@ export const check_out = async (): Promise<void> => {
     });
 
     if (!response) {
+      Notification.open("Failed to pre-order, please try again later");
       set_page(Page.Details);
       return;
     }
 
-    console.log(response.success);
-    console.log(response.data.message)
+    const responseData: any = response._data;
 
+    // Explicitly check: HTTP Status must be 200 AND success flag must be true
+    if (response.status === 200 && responseData?.success === true) {
+      set_page(Page.Confirmed);
+    } else {
+      Notification.open("Failed to pre-order, please try again later");
+      set_page(Page.Details);
+    }
   } catch (error: any) {
+    Notification.open("Failed to pre-order, please try again later");
     set_page(Page.Details);
     console.error('Server Error:', error.data?.statusMessage || error.message)
   }
-
-  set_page(Page.Confirmed);
 }
