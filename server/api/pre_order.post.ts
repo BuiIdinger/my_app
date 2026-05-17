@@ -1,8 +1,6 @@
 import * as UUID from "uuid";
-import {Message, ServerClient} from 'postmark';
-import * as Cart from "~/src/Cart";
-import * as Notification from "~/src/Notification";
-import {email_address, Page, set_page} from "~/src/models/CheckOut";
+import { Message, ServerClient } from 'postmark';
+import { email_address } from "~/src/models/CheckOut";
 
 export default defineEventHandler(async (event) => {
   const method  = getMethod(event)
