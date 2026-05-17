@@ -1,6 +1,5 @@
 import * as UUID from "uuid";
 import { Message, ServerClient } from 'postmark';
-import { email_address } from "~/src/models/CheckOut";
 
 export default defineEventHandler(async (event) => {
   const method  = getMethod(event)
@@ -45,7 +44,7 @@ export default defineEventHandler(async (event) => {
     const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN || '');
 
     const msg: Message = {
-      To: email_address.value,          // Change to your recipient
+      To: email,          // Change to your recipient
       From: "noreply@fluffings.co.nz",  // Must be a verified sender/domain in Postmark
       Subject: "Sending with Postmark is Fun",
       TextBody: "and easy to do anywhere, even with TypeScript",
