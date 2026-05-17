@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  min-height: 100%;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+}
+
+svg {
+  shape-rendering: geometricPrecision;
+}
+
+.animate-float {
+  animation: float-subtle 7s ease-in-out infinite;
+}
+
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(10px, -15px) rotate(17deg);
+  }
+  66% {
+    transform: translate(-8px, 8px) rotate(14deg);
+  }
+}
+
+:root {
+  --animate-float: float-subtle 7s ease-in-out infinite;
+}
+
+.bordered_4 {
+  border: 4px black;
+  /*box-shadow: black 4px_4px_0px_0px_rgba(0,0,0,1);*/
+}
+
+@keyframes float-subtle {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(10px, -15px) rotate(2deg); }
+    66% { transform: translate(-8px, 8px) rotate(-1deg); }
+}
+
+
+/*
+@font-face {
+    font-family: "dyna";
+    src: url("~/assets/fonts/cause.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@layer base {
+    html {
+        font-family: 'dyna', sans-serif;
+    }
+} */
+
+@theme {
+    --color-mint-500: oklch(0.72 0.11 178);
+    --animate-float: float-subtle 7s ease-in-out infinite;
+
+    @keyframes float-subtle {
+        0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        33% {
+            transform: translate(10px, -15px) rotate(2deg);
+        }
+        66% {
+            transform: translate(-8px, 8px) rotate(-1deg);
+        }
+    }
+
+    --spacing-1712: 1712px;
+}
+
+body {
+    @apply antialiased bg-white;
+}

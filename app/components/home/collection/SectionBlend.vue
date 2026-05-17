@@ -1,0 +1,3 @@
+<template>
+  <svg id="uuid-0e85589e-70a6-40a2-ac4f-2ffceda93da5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 299.7219"><path d="M0,190.7277c240.648,41.0824,568.7456,72.2224,954.1,35.9558C1357.208,188.746,1686.1418,89.9249,1920,0v299.7219H0" style="fill:#ffbfd3;"/></svg>
+</template>
