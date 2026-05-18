@@ -11,24 +11,24 @@ export interface Product {
 }
 
 export default defineEventHandler(async (event) => {
-  const method  = getMethod(event)
+  const method = getMethod(event);
   if (method !== "POST") {
     setResponseStatus(event, 405);
-    return { success: false, data: { message: "Method not allowed", }};
+    return { success: false, data: { message: "Method not allowed" } };
   }
 
   const cloudflareEnv = event.context.cloudflare?.env || (globalThis as any).__miniflare__?.bindings;
   const db = cloudflareEnv?.db;
   if (!db) {
     setResponseStatus(event, 500);
-    return { success: false, data: { message: "Internal Server Error qwe" }};
+    return { success: false, data: { message: "Internal Server Error qwe" } };
   }
 
   try {
-    const body: any = await readBody(event)
+    const body: any = await readBody(event);
     if (!body) {
       setResponseStatus(event, 400);
-      return { success: false, data: { message: "Body not found", }};
+      return { success: false, data: { message: "Body not found" } };
     }
 
     const { products, email } = body as { products: Product[]; email: string };
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
     }
     if (!email) {
       setResponseStatus(event, 400);
-      return { success: false, data: { message: "Email not found" }};
+      return { success: false, data: { message: "Email not found" } };
     }
 
     await db.prepare(
@@ -59,181 +59,111 @@ export default defineEventHandler(async (event) => {
       return `$${(priceInCents / 100).toFixed(2)}`;
     };
 
-    // Dynamically map over products into bulletproof table rows
+    // Dynamically map over products into the baseline box-shadow structure
     const productRowsHtml = products.map((product) => {
-      // Note: Use absolute URLs for image sources in actual production emails
       return `
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px; background-color: #000000; border-radius: 20px;">
-        <tr>
-          <td style="padding: 0 8px 8px 0;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff757; border: 4px solid #000000; border-radius: 20px;">
-              <tr>
-                <td style="padding: 20px;">
-                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                    <tr>
-                      <td width="70" valign="middle">
-                        <img src="${product.headshot_image_url}" width="60" height="60" alt="${product.name}" style="display: block; border: 4px solid #000000; border-radius: 50%; max-width: 60px; height: auto;" />
-                      </td>
-                      <td valign="middle" style="font-family: Arial, sans-serif; font-size: 24px; font-weight: 900; color: #000000; padding-left: 15px;">
-                        ${product.name}
-                      </td>
-                    </tr>
-                  </table>
-                  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top: 16px;">
-                    <tr>
-                      <td align="right" style="font-family: Arial, sans-serif; font-size: 24px; font-weight: 900; color: #000000;">
-                        ${formatPrice(product.price)}
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    `;
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px; background-color: #fff757; border: 4px solid #000000; border-radius: 22px; box-shadow: 8px 8px 0px 0px #000000; border-collapse: separate;">
+          <tr>
+            <td style="padding: 20px;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td width="64" valign="middle" style="width: 64px; min-width: 64px; max-width: 64px;">
+                    <img src="https://my-app-1u0.pages.dev${product.headshot_image_url}" width="60" height="60" alt="${product.name}" style="display: block; width: 60px; height: 60px; border: 4px solid #000000; border-radius: 50%;" />
+                  </td>
+                  <td valign="middle" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 24px; font-weight: 900; color: #000000; padding-left: 20px;">
+                    ${product.name}
+                  </td>
+                  <td align="right" valign="middle" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 24px; font-weight: 900; color: #000000;">
+                    ${formatPrice(product.price)}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      `;
     }).join('');
 
-    // The final cross-client compatible HTML string
+    // Consolidated working base layout customized to match your original styling parameters
     const emailHtml = `
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Flufflings Order Confirmation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <style type="text/css">
-    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
-    table { border-collapse: collapse !important; }
-    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #ffffff; }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Pre-Order Has Been Placed</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff;">
-  <center>
-    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff;">
-      <tr>
-        <td style="padding: 40px 20px;">
-          
-          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff0fb; border: 4px solid #000000; border-radius: 40px;">
-            <tr>
-              <td>
-                
-                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td style="padding: 40px 40px 20px 40px; font-family: Arial, sans-serif; font-size: 54px; font-weight: bold; color: #000000;">
-                      Flufflings
-                    </td>
-                  </tr>
-                </table>
+<body style="margin: 0; padding: 40px 20px; background-color: #f0f0f0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
 
-                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td style="padding: 0 40px 40px 40px;">
-                      
-                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
-                        <tr>
-                          <td style="font-family: Arial, sans-serif; font-size: 32px; font-weight: 900; color: #000000;">
-                            Your order
-                          </td>
-                        </tr>
-                      </table>
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" max-width="769" style="max-width: 769px; width: 100%; background-color: #fff0fb; border: 4px solid #000000; border-radius: 100px 100px 0 0; box-shadow: 8px 8px 0px 0px #000000; border-collapse: separate;">
+    <tr>
+      <td style="padding: 60px 40px;">
+        
+        <h1 style="margin: 0 0 10px 0; font-size: 54px; font-weight: bold; line-height: 1.1; color: #000000;">
+          Flufflings
+        </h1>
 
-                      ${productRowsHtml}
+        <h2 style="margin: 0 0 44px 0; font-size: 42px; font-weight: 900; line-height: 1.1; color: #000000;">
+          Your order
+        </h2>
 
-                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top: 40px; margin-bottom: 24px;">
-                        <tr>
-                          <td style="font-family: Arial, sans-serif; font-size: 32px; font-weight: 900; color: #000000;">
-                            Questions & Answers
-                          </td>
-                        </tr>
-                      </table>
+        ${productRowsHtml}
 
-                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px; background-color: #000000; border-radius: 22px;">
-                        <tr>
-                          <td style="padding: 0 8px 8px 0;">
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff757; border: 4px solid #000000; border-radius: 22px;">
-                              <tr>
-                                <td style="padding: 30px;">
-                                  <div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: #000000; margin-bottom: 10px;">How to pick up?</div>
-                                  <div style="font-family: Arial, sans-serif; font-size: 16px; font-weight: 600; color: #000000; line-height: 1.4;">
-                                    Pick ups are available on market day one (27<sup>th</sup> May), come find our booth during the market day and ask to pickup an order.
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
+        <h2 style="margin: 44px 0 24px 0; font-size: 42px; font-weight: 900; line-height: 1.1; color: #000000;">
+          Questions & Answers
+        </h2>
 
-                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px; background-color: #000000; border-radius: 22px;">
-                        <tr>
-                          <td style="padding: 0 8px 8px 0;">
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff757; border: 4px solid #000000; border-radius: 22px;">
-                              <tr>
-                                <td style="padding: 30px;">
-                                  <div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: #000000; margin-bottom: 10px;">Payment</div>
-                                  <div style="font-family: Arial, sans-serif; font-size: 16px; font-weight: 600; color: #000000; line-height: 1.4;">
-                                    We accept cash & card for payment. Payment is completed on pickup on market day.
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 34px; background-color: #fff757; border: 4px solid #000000; border-radius: 22px; box-shadow: 8px 8px 0px 0px #000000; border-collapse: separate;">
+          <tr>
+            <td style="padding: 30px;">
+              <h3 style="margin: 0 0 10px 0; font-size: 28px; font-weight: bold; color: #000000;">How to pick up?</h3>
+              <p style="margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; color: #000000;">
+                Pick ups are available on market day one (27<sup>th</sup> May), come find our booth during the market day and ask to pickup an order.
+              </p>
+            </td>
+          </tr>
+        </table>
 
-                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px; background-color: #000000; border-radius: 22px;">
-                        <tr>
-                          <td style="padding: 0 8px 8px 0;">
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff757; border: 4px solid #000000; border-radius: 22px;">
-                              <tr>
-                                <td style="padding: 30px;">
-                                  <div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: #000000; margin-bottom: 10px;">Returns & Refunds</div>
-                                  <div style="font-family: Arial, sans-serif; font-size: 16px; font-weight: 600; color: #000000; line-height: 1.4;">
-                                    All sales are final once you leave the market booth. If there is an issue with your order, please bring it back to our booth before the market closes so we can sort it out for you!
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 34px; background-color: #fff757; border: 4px solid #000000; border-radius: 22px; box-shadow: 8px 8px 0px 0px #000000; border-collapse: separate;">
+          <tr>
+            <td style="padding: 30px;">
+              <h3 style="margin: 0 0 10px 0; font-size: 28px; font-weight: bold; color: #000000;">Payment</h3>
+              <p style="margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; color: #000000;">
+                We accept cash & card for payment. Payment is completed on pickup on market day.
+              </p>
+            </td>
+          </tr>
+        </table>
 
-                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #000000; border-radius: 22px;">
-                        <tr>
-                          <td style="padding: 0 8px 8px 0;">
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff757; border: 4px solid #000000; border-radius: 22px;">
-                              <tr>
-                                <td style="padding: 30px;">
-                                  <div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: #000000; margin-bottom: 10px;">Need help?</div>
-                                  <div style="font-family: Arial, sans-serif; font-size: 16px; font-weight: 600; color: #000000; line-height: 1.4;">
-                                    Shoot us a DM on Instagram @flufflings_bdsc.
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 34px; background-color: #fff757; border: 4px solid #000000; border-radius: 22px; box-shadow: 8px 8px 0px 0px #000000; border-collapse: separate;">
+          <tr>
+            <td style="padding: 30px;">
+              <h3 style="margin: 0 0 10px 0; font-size: 28px; font-weight: bold; color: #000000;">Returns & Refunds</h3>
+              <p style="margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; color: #000000;">
+                All sales are final once you leave the market booth. If there is an issue with your order, please bring it back to our booth before the market closes so we can sort it out for you!
+              </p>
+            </td>
+          </tr>
+        </table>
 
-                    </td>
-                  </tr>
-                </table>
-                
-              </td>
-            </tr>
-          </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 0; background-color: #fff757; border: 4px solid #000000; border-radius: 22px; box-shadow: 8px 8px 0px 0px #000000; border-collapse: separate;">
+          <tr>
+            <td style="padding: 30px;">
+              <h3 style="margin: 0 0 10px 0; font-size: 28px; font-weight: bold; color: #000000;">Need help?</h3>
+              <p style="margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; color: #000000;">
+                Shoot us a DM on Instagram @flufflings_bdsc.
+              </p>
+            </td>
+          </tr>
+        </table>
 
-        </td>
-      </tr>
-    </table>
-  </center>
+      </td>
+    </tr>
+  </table>
+
 </body>
 </html>
-  `;
+    `;
 
     await $fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
@@ -265,6 +195,6 @@ export default defineEventHandler(async (event) => {
   } catch (error: any) {
     console.error("Database Error:", error);
     setResponseStatus(event, 500);
-    return { success: false, data: { error: error, message: "Internal Server Error aaa" }}
+    return { success: false, data: { error: error, message: "Internal Server Error aaa" } };
   }
 });
