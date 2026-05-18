@@ -65,7 +65,7 @@
 
         <div class="font-black text-[20px] lg:text-[30px] flex justify-between items-end mb-[24px]">
           <p>Cart Total</p>
-          <p>{{ Format.price(0) }}</p>
+          <p>{{ Format.price(VueUse.get(total_price)) }}</p>
         </div>
 
         <button
@@ -92,6 +92,7 @@ import * as Cart from "~/src/Cart";
 import * as ProductPreview from "~/src/models/ProductPreview";
 import * as Format from "~/src/Format";
 import { computed, useTemplateRef } from "vue";
+import * as VueUse from "@vueuse/core";
 
 /// Allow closing model after click outside of model target area
 const target = useTemplateRef("model");
@@ -103,6 +104,12 @@ Use.onClickOutside(target, event => {
 /// users cart
 const checkout_button_enabled = computed(() => {
   return Cart.is_contents_empty() ? "opacity-50 cursor-not-allowed" : "opacity-100 cursor-pointer hover:scale-[.98]";
+});
+
+const total_price = computed<number>(() => {
+  return Cart.contents.value.reduce((sum, product) => {
+    return sum + product.price;
+  }, 0);
 });
 </script>
 

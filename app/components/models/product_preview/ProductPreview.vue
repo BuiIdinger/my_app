@@ -1,9 +1,5 @@
 <template>
-  <BaseModel
-    @close="ProductPreview.close()"
-    :visible="ProductPreview.status.value"
-    :with_traffic_light="true"
-  >
+  <BaseModel v-model:visible="ProductPreview.status.value">
     <div
       v-if="ProductPreview.active_product.value"
       class="flex flex-col md:flex-row gap-[12px] lg:gap-[24px]"

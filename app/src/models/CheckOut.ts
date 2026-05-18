@@ -3,17 +3,22 @@ import * as VueUse from "@vueuse/core";
 import * as Cart from "~/src/Cart";
 import * as Notification from "~/src/Notification";
 
+export interface FormData {
+  email_address: string | null,
+}
+
+export const form_data: FormData = reactive({
+  email_address: null,
+});
+
 export enum Page {
   Details,
   Loading,
   Confirmed,
 }
 
-export const error_message = ref<string | null>(null);
-
 const internal_current_page = ref<Page>(Page.Details);
 const is_model_open = ref<boolean>(false);
-export const email_address = ref<string>("");
 
 export const open = (): void => {
   VueUse.set(is_model_open, true);
@@ -24,8 +29,13 @@ export const close = (): void => {
 export const invert = (): void => {
   VueUse.set(is_model_open, VueUse.get(!is_model_open.value));
 }
-export const status: ComputedRef<boolean> = computed((): boolean => {
-  return VueUse.get(is_model_open);
+export const status: WritableComputedRef<boolean> = computed<boolean>({
+  get(): boolean {
+    return is_model_open.value;
+  },
+  set(newValue: boolean): void {
+    is_model_open.value = newValue;
+  }
 });
 
 export const page: ComputedRef<Page> = computed((): Page => {
@@ -37,12 +47,12 @@ export const set_page = (page: Page): void => {
 }
 
 export const check_out = async (): Promise<void> => {
-  if (VueUse.get(email_address) === "") {
-    VueUse.set(error_message, "Email address cannot be empty");
+  if (form_data.email_address === null || form_data.email_address === "") {
+    Notification.open("Email address cannot be empty");
     return;
   }
-  if (VueUse.get(email_address).indexOf("@my.bdsc.school.nz") === -1) {
-    VueUse.set(error_message, "Email address must end in @my.bdsc.school.nz");
+  if (form_data.email_address.indexOf("@my.bdsc.school.nz") === -1) {
+    Notification.open("Email address must end in @my.bdsc.school.nz");
     return;
   }
 
@@ -52,13 +62,15 @@ export const check_out = async (): Promise<void> => {
     const response: any = await $fetch("/api/pre_order", {
       method: "POST",
       body: {
-        email: email_address.value,
+        email: form_data.email_address,
         products: Cart.contents.value,
       }
     });
 
     if (response?.success === true) {
+      form_data.email_address = null;
       set_page(Page.Confirmed);
+      Cart.delete_cart();
     } else {
       Notification.open("Failed to pre-order, please try again later");
       set_page(Page.Details);

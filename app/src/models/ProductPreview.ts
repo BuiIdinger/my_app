@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { set, get, useTimeoutFn } from "@vueuse/core";
+import { set, get } from "@vueuse/core";
 import * as Cart from "~/src/Cart";
 import type { Product } from "~/src/Product";
 import * as Notification from "~/src/Notification";
@@ -28,8 +28,19 @@ export const invert = (): void => {
     should_open_cart_after.value = false;
   }
 }
-export const status: ComputedRef<boolean> = computed(() => {
-  return is_model_open.value;
+export const status: WritableComputedRef<boolean> = computed<boolean>({
+  get(): boolean {
+    return is_model_open.value;
+  },
+  set(new_value: boolean): void {
+    is_model_open.value = new_value;
+
+    /// Check if we need to open the cart model after
+    if (get(should_open_cart_after) === true) {
+      Cart.open();
+      should_open_cart_after.value = false;
+    }
+  }
 });
 
 export const active_product: ComputedRef<Product | null> = computed(() => {

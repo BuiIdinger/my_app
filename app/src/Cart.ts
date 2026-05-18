@@ -1,6 +1,9 @@
-import { ref, computed } from "vue";
+import { ref, computed, type ComputedRef } from "vue";
 import type { Product } from "~/src/Product";
 import * as CheckOut from "~/src/models/CheckOut";
+import * as Notification from "~/src/Notification";
+
+const STORAGE_KEY = "buildinger-belleeeee";
 
 const is_model_open = ref<boolean>(false);
 
@@ -17,9 +20,23 @@ export const status: ComputedRef<boolean> = computed(() => {
   return is_model_open.value;
 });
 
-const filler_products: Product[] = [];
+const save_cart = (): void => {
+  console.debug("saving newly updated cart");
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cart_products.value));
+}
 
-const cart_products = ref<Product[]>(filler_products);
+const get_initial_cart = (): Product[] => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    console.debug("got existing saved cart");
+    return saved ? JSON.parse(saved) : [];
+  } catch (error) {
+    Notification.open("Failed to load existing saved cart");
+    return [];
+  }
+}
+
+const cart_products = ref<Product[]>(get_initial_cart());
 
 export const contents = computed(() => {
   return cart_products.value;
@@ -31,10 +48,17 @@ export const is_contents_empty = (): boolean => {
 
 export const add = (product: Product): void => {
   cart_products.value.push(product);
+  save_cart();
+}
+
+export const delete_cart = (): void => {
+  cart_products.value = [];
+  save_cart();
 }
 
 export const remove = (index: number): void => {
   cart_products.value.splice(index, 1);
+  save_cart();
 }
 
 export const check_out = (): void => {

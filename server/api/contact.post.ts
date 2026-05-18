@@ -1,22 +1,6 @@
-import * as UUID from "uuid";
 
-export interface Product {
-  id: number;
-  price: number;
-  name: string;
-  description: string;
-  headshot_image_url: string;
-  legal_information: string[];
-  slideshow_images_url: string[];
-}
 
 export default defineEventHandler(async (event) => {
-  const method  = getMethod(event)
-  if (method !== "POST") {
-    setResponseStatus(event, 405);
-    return { success: false, data: { message: "Method not allowed", }};
-  }
-
   const cloudflareEnv = event.context.cloudflare?.env || (globalThis as any).__miniflare__?.bindings;
   const db = cloudflareEnv?.db;
   if (!db) {

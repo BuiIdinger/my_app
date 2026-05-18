@@ -1,82 +1,49 @@
 <template>
   <component
-  :is="isLink ? 'NuxtLink' : 'button'"
-  ref="buttonRef"
-  v-bind="componentProps"
-  class="border-[3.2px] bg-white border-black rounded-full flex justify-center
+    v-if="props.variant === BaseButton.Variant.WhiteBackgroundBordered"
+    v-on:click.prevent="emit('click', $event)"
+    :is="component_type"
+    :to="props.href"
+    class="border-[3.2px] bg-white border-black rounded-full flex justify-center
            items-center px-[30px] lg:px-[38px] py-[14px] lg:py-[16px] font-black
            text-[14px] lg:text-[16px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
-           cursor-pointer select-none"
+           cursor-pointer select-none hover:translate-y-[4px] hover:opacity-50 duration-300"
   >
     {{ text }}
+  </component>
+
+  <component
+    v-else-if="props.variant === BaseButton.Variant.YellowBackgroundBordered"
+    v-on:click.prevent="emit('click', $event)"
+    :is="component_type"
+    :to="props.href"
+    class="bg-[#fff757] border-[3.2px] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex text-center justify-center rounded-[22px]
+          px-[40px] py-[10px] border-black font-black duration-300 text-[20px] lg:text-[30px]
+          hover:opacity-50 hover:translate-y-[4px] active:scale-[.95] cursor-pointer"
+    >
+      {{ text }}
   </component>
 </template>
 
 <script setup lang="ts">
-import { computed, useTemplateRef, watchEffect, useAttrs } from 'vue'
-import { useMouseInElement } from '@vueuse/core'
-import { gsap } from 'gsap'
-
-/**
- * 1. Component Config & Types
- */
-defineOptions({
-  inheritAttrs: false // We handle attrs manually via componentProps
-})
+import * as BaseButton from "~/src/BaseButton";
+import { computed } from "vue";
 
 interface Props {
-  text: string
-  linkHref?: string
+  text: string,
+  variant: BaseButton.Variant,
+  href?: string | null,
 }
 
-const props = defineProps<Props>()
-const attrs = useAttrs()
+const props = withDefaults(defineProps<Props>(), {
+  href: null,
+});
 
-/**
- * 2. Component Logic
- */
-const isLink = computed(() => !!props.linkHref)
+const emit = defineEmits<{
+  click: [event: MouseEvent],
+}>();
 
-const componentProps = computed(() => ({
-  ...(isLink.value ? { to: props.linkHref } : { type: 'button' }),
-  ...attrs
-}))
-
-const buttonRef = useTemplateRef<HTMLElement | any>('buttonRef')
-
-const {
-  elementX,
-  elementY,
-  elementWidth,
-  elementHeight,
-  isOutside
-} = useMouseInElement(buttonRef)
-
-watchEffect(() => {
-  const el = buttonRef.value?.$el ?? buttonRef.value
-  if (!el) return
-
-  if (isOutside.value) {
-    gsap.to(el, {
-      x: 0,
-      y: 0,
-      duration: 0.8,
-      ease: "elastic.out(1, 0.3)"
-    })
-  } else {
-    // Follow mouse
-    const centerX = elementWidth.value / 2
-    const centerY = elementHeight.value / 2
-
-    const moveX = (elementX.value - centerX) * 0.35
-    const moveY = (elementY.value - centerY) * 0.35
-
-    gsap.to(el, {
-      x: moveX,
-      y: moveY,
-      duration: 0.4,
-      ease: "power2.out"
-    })
-  }
-})
+const component_type = computed((): any => {
+  return props.href ? resolveComponent("NuxtLink") : "button";
+});
 </script>

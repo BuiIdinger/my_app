@@ -21,7 +21,6 @@
         >
           <!-- Traffic Light -->
           <BaseTrafficLight
-            v-if="props.with_traffic_light"
             @click="close_model()"
             class="w-fit mb-[20px] lg:mb-[40px]"
           />
@@ -40,13 +39,12 @@ import BaseTrafficLight from "~/components/base/TrafficLight.vue";
 import * as VueUse from "@vueuse/core";
 import { useTemplateRef } from "vue";
 
-const emit = defineEmits<{close: []}>();
+const visible = defineModel<boolean>("visible", { default: false });
 
 interface Props {
   visible: boolean,
   persistence?: boolean,
   claim_scroll_lock_ownership?: boolean,
-  with_traffic_light?: boolean,
   background_color?: string,
   max_height?: string,
   max_width?: string,
@@ -57,7 +55,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   persistence: false,
   claim_scroll_lock_ownership: false,
-  with_traffic_light: true,
   max_height: "calc(100dvh - 60px)",
   max_width: "fit-content",
   background_color: "#fff0fb",
@@ -74,7 +71,7 @@ const dynamic_style_class = computed(() => ({
 }));
 
 const close_model = (): void => {
-  emit("close");
+  VueUse.set(visible, false);
 }
 
 VueUse.onClickOutside(useTemplateRef("model"), event => {

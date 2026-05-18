@@ -1,69 +1,60 @@
 <template>
-  <BackdropOverlay v-if="get(ContactUs.status)" />
-
-  <Transition name="hamburger" mode="out-in">
-    <div
-      v-if="get(ContactUs.status)"
-      class="fixed top-0 bottom-0 left-0 right-0 z-[999] mx-auto flex justify-center items-center"
+  <BaseModel v-model:visible="ContactUs.status.value">
+    <Transition
+      name="content"
+      mode="out-in"
     >
-      <div
-        ref="model"
-        class="bg-[#fff0fb] rounded-[33px] p-[40px] border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-      >
-        <TrafficLight
-          @click="ContactUs.close()"
-          class="mb-[40px] w-fit"
+      <div class="w-[840px] max-w-full">
+        <!-- Title -->
+        <div class="font-black text-[50px]">
+          <h1>Contact Us</h1>
+        </div>
+
+        <!-- Inputs -->
+        <div class="my-[40px] flex flex-col gap-y-[24px]">
+          <BaseInput
+            v-model:value="ContactUs.form_data.email"
+            placeholder="Email Address (@my.bdsc.school.nz)"
+            mode="email"
+          />
+
+          <BaseInput
+            v-model:value="ContactUs.form_data.message_content"
+            placeholder="Message Content"
+            mode="text"
+            :underlying_element="BaseInputLogic.UnderlyingElement.TextArea"
+          />
+        </div>
+
+        <BaseButton
+          :variant="BaseButtonLogic.Variant.YellowBackgroundBordered"
+          text="Submit"
+          v-on:click.prevent="ContactUs.submit()"
         />
-
-        <div>
-          <div class="font-black text-[50px]">
-            <h1>Contact Us</h1>
-          </div>
-
-          <div class="py-[20px]">
-
-            <input
-              class="px-[28px] py-[20px] appearance-none border-[8px] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] w-full rounded-[26px]
-                font-black text-[29px] border-black"
-              placeholder="Name"
-            />
-          </div>
-
-        </div>
-
-        <div class="flex gap-x-[24px] w-[1172px]">
-
-        </div>
       </div>
-    </div>
-  </Transition>
+    </Transition>
+  </BaseModel>
 </template>
 
 <script setup lang="ts">
-import TrafficLight from "~/components/base/TrafficLight.vue";
-import BackdropOverlay from "~/components/models/BackdropOverlay.vue";
-import Slideshow from "./Slideshow.vue";
-import Details from "./Details.vue";
+import BaseInput from "~/components/base/Input.vue";
+import * as BaseInputLogic from "~/src/BaseInput";
+import BaseButton from "~/components/base/Button.vue";
+import * as BaseButtonLogic from "~/src/BaseButton";
+import BaseModel from "~/components/models/BaseModel.vue";
 import * as ContactUs from "~/src/models/ContactUs";
-import { useTemplateRef } from "vue";
-import { onClickOutside, get } from "@vueuse/core";
-
-const target = useTemplateRef("model");
-
-onClickOutside(target, event => {
-  ContactUs.close();
-});
+import * as VueUse from "@vueuse/core";
 </script>
 
 <style scoped lang="css">
-.hamburger-enter-active,
-.hamburger-leave-active {
+.content-enter-active,
+.content-leave-active {
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.hamburger-enter-from,
-.hamburger-leave-to {
-  transform: scale(90%);
+.content-enter-from,
+.content-leave-to {
   opacity: 0;
+  transform: scale(80%);
 }
 </style>

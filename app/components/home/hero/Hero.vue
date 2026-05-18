@@ -55,8 +55,10 @@
       <!-- Buttons -->
       <div class="relative z-[10] flex flex-wrap gap-[1rem]">
         <BaseButton
-          text="Shop the Collection"
-          link_href="/shop-all"
+          class="w-fit"
+          text="Shop the Collection →"
+          :variant="BaseButtonLogic.Variant.WhiteBackgroundBordered"
+          href="/shop-all"
         />
       </div>
 
@@ -77,5 +79,5 @@
 import BaseButton from "~/components/base/Button.vue";
 import BaseStarCluster from "~/components/base/StarCluster.vue";
 import BaseSmiley from "~/components/base/Smiley.vue";
-import Arrow from "./Arrow.vue";
+import * as BaseButtonLogic from "~/src/BaseButton";
 </script>

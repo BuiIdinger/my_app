@@ -1,8 +1,6 @@
 <template>
   <BaseModel
-    :visible="VueUse.get(CheckOut.status)"
-    :claim_scroll_lock_ownership="true"
-    @close="CheckOut.close()"
+    v-model:visible="CheckOut.status.value"
     :persistence="should_stay_persistence"
     max_width="800px"
     width="800px"

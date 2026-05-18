@@ -1,10 +1,14 @@
 <template>
   <div class="mx-[14px] lg:mx-[40px] pt-[200px] lg:pt-[300px] relative z-[10]">
-    <button class="flex items-center border-[3.2px] bg-white border-black rounded-full
-        cursor-pointer hover:translate-y-[4px] duration-300 mx-auto py-[14px] px-[40px]
-        font-bold text-[16px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:opacity-60">
-      Lorem ipsum
-    </button>
+
+    <div class="flex justify-center">
+      <BaseButton
+        class="w-fit"
+        text="↑ Back To Top"
+        :variant="BaseButtonLogic.Variant.WhiteBackgroundBordered"
+        v-on:click.prevent="scroll_to_top"
+      />
+    </div>
 
     <!-- Footer -->
     <footer class="max-w-[1024px] mx-auto bg-[#fff757] border-[4px] border-black
@@ -31,18 +35,21 @@
           Shop All
         </nuxt-link>
 
-        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">
-          Sustainability / Mission
-        </div>
-        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">
+<!--        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">-->
+<!--          Sustainability / Mission-->
+<!--        </div>-->
+        <div
+          @click.prevent="ContactUsModel.open()"
+          class="cursor-not-allowed hover:scale-[.90] duration-300 w-fit"
+        >
           Contact Us
         </div>
-        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">
-          How It's Made
-        </div>
-        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">
-          About Us
-        </div>
+<!--        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">-->
+<!--          How It's Made-->
+<!--        </div>-->
+<!--        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">-->
+<!--          About Us-->
+<!--        </div>-->
 
         <nuxt-link to="/terms-and-conditions" class="hover:scale-[.90] hover:opacity-60 duration-300 w-fit">
           Terms of Conditions
@@ -51,16 +58,26 @@
         <nuxt-link to="/privacy-policy" class="hover:scale-[.90] hover:opacity-60 duration-300 w-fit">
           Privacy Policy
         </nuxt-link>
-
-
       </nav>
 
-      <!-- Border seperator -->
+      <!-- Border separator -->
       <div class="border-t-[2px] opacity-25 border-black my-[30px]" />
 
       <!-- Bottom section -->
-      <div class="flex justify-between opacity-20 font-bold">
-        <p>Copyright © Fluffings. All rights reserved. </p>
+      <div class="flex text-center sm:text-left flex-col sm:flex-row gap-y-[20px] justify-between opacity-20 font-bold">
+        <div class="flex flex-col sm:justify-center justify-normal sm:items-center items-left sm:flex-row gap-[20px]">
+          <NuxtLink
+            :external="true"
+            target="_blank"
+            class="w-fit"
+            to="https://www.instagram.com/flufflings_bdsc/"
+          >
+            <InstagramGlyph class="w-[24px] h-auto" />
+          </NuxtLink>
+
+          <p>Copyright © Flufflings 2026. All rights reserved. </p>
+        </div>
+
         <p>SS → | TBC</p>
       </div>
     </footer>
@@ -70,4 +87,15 @@
 <script setup lang="ts">
 import BaseSmiley from "~/components/base/Smiley.vue";
 import BaseHearts from "~/components/base/Hearts.vue";
+import InstagramGlyph from "~/components/svg_glyphs/Instagram.vue";
+import BaseButton from "~/components/base/Button.vue";
+import * as ContactUsModel from "~/src/models/ContactUs";
+import * as BaseButtonLogic from "~/src/BaseButton";
+
+const scroll_to_top = (): void => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 </script>
