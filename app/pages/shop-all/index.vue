@@ -39,15 +39,15 @@
     </div>
   </div>
 
-  <spike class="rotate-0" />
 
   <!--
 
     Collections
 
   -->
+  <SpikeGlyph class="rotate-0" />
   <div class="w-full bg-[#ffbfd3]">
-    <div class="w-full relative max-w-[1786px] mx-auto z-[10] px-[1rem] py-[4rem] lg:py-[6rem]">
+    <div class="w-full relative max-w-[1786px] mx-auto z-[10] px-[1rem] py-[8rem] lg:py-[12rem]">
       <!-- Crown -->
       <crown_glyph class="hidden lg:block absolute left-[-17rem] top-[6rem] w-[8rem] lg:w-[10rem] h-auto rotate-[-9deg]" />
 
@@ -79,7 +79,7 @@
 <!--          <hero_arrow class="max-w-[559px] h-auto" />-->
 <!--        </div>-->
 
-        <div class="flex justify-center gap-[20px] lg:gap-[65px]">
+        <div class="flex flex-wrap justify-center gap-[20px] lg:gap-[65px]">
           <ProductCard
             v-for="product in get(Products.products)"
             :product="product"
@@ -88,8 +88,7 @@
       </div>
     </div>
   </div>
-
-  <spike class="rotate-[180deg]" />
+  <SpikeGlyph class="rotate-[180deg]" />
 
 </template>
 
@@ -98,7 +97,7 @@ import BaseStarCluster from "~/components/base/StarCluster.vue";
 import crown_glyph from "~/components/svg_glyphs/crown.vue";
 import TrafficLight from "~/components/base/TrafficLight.vue";
 import ProductCard from "~/components/shop_all/card.vue";
-import spike from "~/components/spike.vue";
+import SpikeGlyph from "~/components/svg_glyphs/Spike";
 import * as ProductPreview from "~/src/models/ProductPreview";
 import * as Products from "~/src/Product";
 import { get } from "@vueuse/core";

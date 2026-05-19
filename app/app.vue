@@ -1,9 +1,14 @@
 <template>
   <NuxtRouteAnnouncer />
   <NuxtLayout>
-    <NuxtPage />
+    <ComeBackLater />
+<!--    <NuxtPage />-->
   </NuxtLayout>
 </template>
+
+<script setup lang="ts">
+import ComeBackLater from "~/components/ComeBackLater.vue";
+</script>
 
 <style lang="css">
 /*

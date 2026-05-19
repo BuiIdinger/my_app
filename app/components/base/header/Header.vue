@@ -24,24 +24,14 @@
           >
             <p>Shop All</p>
           </nuxt-link>
-
-<!--          <div class="cursor-not-allowed opacity-25">-->
-<!--            <p>Sustainability / Mission</p>-->
-<!--          </div>-->
         </div>
 
-        <div class="flex gap-x-[26px]">
-<!--          <div class="cursor-not-allowed opacity-25">-->
-<!--            <p>How It's Made</p>-->
-<!--          </div>-->
-
-          <button
-            @click.prevent="ContactUs.open()"
-            class="cursor-pointer hover:opacity-75 duration-300"
-          >
-            Contact Us
-          </button>
-        </div>
+        <button
+          @click.prevent="ContactUs.open()"
+          class="cursor-pointer hover:opacity-75 duration-300"
+        >
+          Contact Us
+        </button>
       </nav>
 
       <div class="flex gap-x-[20px]">

@@ -1,41 +1,36 @@
 <template>
-  <BackdropOverlay :claim_scroll_lock_ownership="true" v-if="Use.get(Cart.status)" />
+  <BaseModel
+  v-model:visible="Cart.status.value"
+  :variant="BaseModelLogic.Variant.AlignedFixedRightTopDownMaxWidth"
+  max_width="700px"
+  width="700px"
+  height="100vh"
+  max_height="100vh"
+  >
+    <div class="h-[calc(100vh-40px)] lg:h-[calc(100vh-80px)] max-h-full flex flex-col justify-between min-h-0 relative">
 
-  <Transition name="cart" mode="out-in">
-    <div
-      ref="model"
-      v-if="Use.get(Cart.status)"
-      class="lg:w-[700px] w-full fixed right-0 top-0 bottom-0 bg-[#fff0fb]
-             lg:border-l-[8px] border-black z-[999] p-[20px] lg:p-[60px] flex flex-col"
-    >
+      <CrossGlyph
+        v-on:click.prevent="Cart.close()"
+        class="w-[24px] h-auto absolute top-0 right-0 fill-black cursor-pointer z-10"
+      />
 
-<!--      <BaseSmiley class="absolute right-[25px] bottom-[140px] hover:scale-[.85] duration-300 w-[100px]-->
-<!--                       h-[100px] md:w-[140px] md:h-[140px] rotate-[15deg] animate-float z-[10] pointer-events-none" />-->
-
-      <div class="w-full flex justify-end mb-[20px]">
-        <CrossGlyph
-          @click="Cart.close()"
-          class="w-[24px] h-auto fill-black cursor-pointer"
-        />
-      </div>
-
-
-      <div class="flex-1 overflow-y-auto pr-[10px] custom-scrollbar flex flex-col gap-y-[20px]">
+      <div class="pb-[10px] flex-1 overflow-y-auto min-h-0 mt-[60px] mb-[20px] pr-[10px] custom-scrollbar flex flex-col gap-y-[20px]">
         <NoProductsAdded v-if="Use.get(Cart.contents).length === 0" />
 
         <div
+          v-else
           v-for="(product, index) in Use.get(Cart.contents)"
           :key="index"
           class="bg-[#fff757] p-[20px] rounded-[20px] border-[4px] border-black
-                shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex-shrink-0"
+                 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex-shrink-0"
         >
           <div class="flex items-center gap-[20px]">
             <nuxt-img
-              :src="product.headshot_image_url"
-              width="87"
-              height="87"
-              format="webp"
-              class="rounded-full w-[60px] h-[60px] lg:w-[87px] lg:h-[87px] border-[4px] border-black flex-shrink-0"
+            :src="product.headshot_image_url"
+            width="87"
+            height="87"
+            format="webp"
+            class="rounded-full w-[60px] h-[60px] lg:w-[87px] lg:h-[87px] border-[4px] border-black flex-shrink-0"
             />
             <div class="font-black text-[20px] lg:text-[26px]">
               <p>{{ product.name }}</p>
@@ -59,8 +54,7 @@
         </div>
       </div>
 
-      <!-- Bottom -->
-      <div class="mt-auto">
+      <div class="flex-shrink-0 mt-auto w-full">
         <div class="my-[20px] border-t-black border-t-[1px] opacity-30" />
 
         <div class="font-black text-[20px] lg:text-[30px] flex justify-between items-end mb-[24px]">
@@ -69,36 +63,31 @@
         </div>
 
         <button
-          @click.prevent="Cart.check_out()"
-          :class="checkout_button_enabled"
-          class="w-full bg-[#fff757] border-[4px] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-[22px]
+        @click.prevent="Cart.check_out()"
+        :class="checkout_button_enabled"
+        class="w-full bg-[#fff757] border-[4px] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-[22px]
                  px-[40px] py-[10px] border-black font-black duration-300 text-[20px] lg:text-[30px]"
         >
           Pre-order
         </button>
       </div>
     </div>
-  </Transition>
+  </BaseModel>
 </template>
 
 <script setup lang="ts">
 import CrossGlyph from "~/components/svg_glyphs/cross.vue";
-import BackdropOverlay from "~/components/models/BackdropOverlay.vue";
 import TrashCanGlyph from "~/components/svg_glyphs/TrashCan.vue";
 import ChevronLeftTwo from "~/components/svg_glyphs/ChevronLeftTwo.vue";
 import NoProductsAdded from "~/components/cart/NoProductsAdded.vue";
+import BaseModel from "~/components/models/BaseModel.vue";
 import * as Use from "@vueuse/core";
 import * as Cart from "~/src/Cart";
 import * as ProductPreview from "~/src/models/ProductPreview";
 import * as Format from "~/src/Format";
-import { computed, useTemplateRef } from "vue";
 import * as VueUse from "@vueuse/core";
-
-/// Allow closing model after click outside of model target area
-const target = useTemplateRef("model");
-Use.onClickOutside(target, event => {
-  Cart.close();
-});
+import * as BaseModelLogic from "~/src/BaseModel";
+import { computed } from "vue";
 
 /// Dim the checkout button if no items exist in the
 /// users cart
@@ -131,7 +120,6 @@ const total_price = computed<number>(() => {
   opacity: 0;
 }
 
-/* Optional: smooth scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }

@@ -38,12 +38,12 @@
 <!--        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">-->
 <!--          Sustainability / Mission-->
 <!--        </div>-->
-        <div
+        <button
           @click.prevent="ContactUsModel.open()"
-          class="cursor-not-allowed hover:scale-[.90] duration-300 w-fit"
+          class="cursor-pointer hover:scale-[.90] duration-300 w-fit"
         >
           Contact Us
-        </div>
+        </button>
 <!--        <div class="cursor-not-allowed opacity-25 hover:scale-[.90] duration-300 w-fit">-->
 <!--          How It's Made-->
 <!--        </div>-->

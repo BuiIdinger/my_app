@@ -3,7 +3,7 @@
 
     <!-- Quick description about the product -->
     <div class="border-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-[22px]
-                p-[20px] lg:p-[40px] border-black font-black h-full"
+                p-[20px] lg:p-[40px] border-black font-black h-full text-wrap"
     >
       <p>{{ props.product.description }}</p>
     </div>

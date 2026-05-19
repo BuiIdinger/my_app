@@ -6,10 +6,14 @@
     <!--
       :)
     -->
-    <BaseSmiley class="absolute top-[-15px] right-[-15px] lg:top-[-25px] lg:right-[-25px] w-[72px] h-[72px] lg:w-[100px] lg:h-[100px] rotate-[20deg]" />
+    <BaseSmiley class="absolute top-[-15px] right-[-15px] lg:top-[-25px] lg:right-[-25px] w-[72px] h-[72px] lg:w-[100px]
+        lg:h-[100px] rotate-[20deg]" />
 
     <!-- Slideshow of product -->
     <nuxt-img
+      format="webp"
+      height="700"
+      width="full"
       :src="ProductPreview.active_product.value.slideshow_images_url.at(0)"
       class="border-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-[22px]
              px-[40px] py-[20px] border-black font-black text-[20px] h-auto

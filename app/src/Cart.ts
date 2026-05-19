@@ -16,8 +16,14 @@ export const close = (): void => {
 export const invert = (): void => {
   is_model_open.value = !is_model_open.value;
 }
-export const status: ComputedRef<boolean> = computed(() => {
-  return is_model_open.value;
+
+export const status: WritableComputedRef<boolean> = computed<boolean>({
+  get(): boolean {
+    return is_model_open.value;
+  },
+  set(newValue: boolean): void {
+    is_model_open.value = newValue;
+  }
 });
 
 const save_cart = (): void => {

@@ -11,17 +11,24 @@ export interface Product {
 }
 
 export default defineEventHandler(async (event) => {
-  const method = getMethod(event);
-  if (method !== "POST") {
-    setResponseStatus(event, 405);
-    return { success: false, data: { message: "Method not allowed" } };
-  }
-
+  /// Fetch tokens, could more or less be rather more efficient, but TypeScript, and the
+  /// Node.js runtime is somthing more to worry about
   const cloudflareEnv = event.context.cloudflare?.env || (globalThis as any).__miniflare__?.bindings;
   const db = cloudflareEnv?.db;
   if (!db) {
     setResponseStatus(event, 500);
     return { success: false, data: { message: "Internal Server Error qwe" } };
+  }
+
+  const token = cloudflareEnv?.POSTMARK_SERVER_TOKEN;
+  if (!token) {
+    throw new Error("POSTMARK_SERVER_TOKEN is missing from environment variables");
+  }
+
+  const method = getMethod(event);
+  if (method !== "POST") {
+    setResponseStatus(event, 405);
+    return { success: false, data: { message: "Method not allowed" } };
   }
 
   try {
@@ -31,6 +38,7 @@ export default defineEventHandler(async (event) => {
       return { success: false, data: { message: "Body not found" } };
     }
 
+    /// Extract required data from request
     const { products, email } = body as { products: Product[]; email: string };
     if (!products || !Array.isArray(products)) {
       setResponseStatus(event, 400);
@@ -40,7 +48,12 @@ export default defineEventHandler(async (event) => {
       setResponseStatus(event, 400);
       return { success: false, data: { message: "Email not found" } };
     }
+    if (email.indexOf("@my.bdsc.school.nz") === -1) {
+      setResponseStatus(event, 400);
+      return { success: false, data: { message: "Invalid email" }};
+    }
 
+    /// Prepare and run an insert into orders table
     await db.prepare(
       `INSERT INTO orders (id, email, products, created_at) VALUES (?, ?, ?, ?)`
     ).bind(
@@ -50,17 +63,13 @@ export default defineEventHandler(async (event) => {
       new Date().toISOString()
     ).run();
 
-    const token = cloudflareEnv?.POSTMARK_SERVER_TOKEN;
-    if (!token) {
-      throw new Error("POSTMARK_SERVER_TOKEN is missing from environment variables");
-    }
-
     const formatPrice = (priceInCents: number): string => {
       return `$${(priceInCents / 100).toFixed(2)}`;
     };
 
-    // Dynamically map over products into the baseline box-shadow structure
-    const productRowsHtml = products.map((product) => {
+    /// Email HTML is all AI generated, because wtf are we doing in 2026 using
+    /// the most legacy shit ever
+    const productRowsHtml: string = products.map((product: Product): string => {
       return `
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px; background-color: #fff757; border: 4px solid #000000; border-radius: 22px; box-shadow: 8px 8px 0px 0px #000000; border-collapse: separate;">
           <tr>
@@ -68,7 +77,7 @@ export default defineEventHandler(async (event) => {
               <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                   <td width="64" valign="middle" style="width: 64px; min-width: 64px; max-width: 64px;">
-                    <img src="https://my-app-1u0.pages.dev${product.headshot_image_url}" width="60" height="60" alt="${product.name}" style="display: block; width: 60px; height: 60px; border: 4px solid #000000; border-radius: 50%;" />
+                    <img src="https://fluffings.co.nz${product.headshot_image_url}" width="60" height="60" alt="${product.name}" style="display: block; width: 60px; height: 60px; border: 4px solid #000000; border-radius: 50%;" />
                   </td>
                   <td valign="middle" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 24px; font-weight: 900; color: #000000; padding-left: 20px;">
                     ${product.name}
@@ -84,7 +93,6 @@ export default defineEventHandler(async (event) => {
       `;
     }).join('');
 
-    // Consolidated working base layout customized to match your original styling parameters
     const emailHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +168,6 @@ export default defineEventHandler(async (event) => {
       </td>
     </tr>
   </table>
-
 </body>
 </html>
     `;

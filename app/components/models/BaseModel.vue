@@ -10,7 +10,7 @@
       mode="out-in"
     >
       <div
-        v-if="props.visible"
+        v-if="props.visible && props.variant === BaseModel.Variant.Centered"
         class="fixed inset-0 z-[999] flex justify-center items-center"
       >
         <div
@@ -21,11 +21,32 @@
         >
           <!-- Traffic Light -->
           <BaseTrafficLight
-            @click="close_model()"
+            @click="close()"
             class="w-fit mb-[20px] lg:mb-[40px]"
           />
 
           <!-- Content -->
+          <slot />
+        </div>
+      </div>
+    </Transition>
+
+    <Transition name="cart" mode="out-in">
+      <div
+        v-if="props.visible && props.variant === BaseModel.Variant.AlignedFixedRightTopDownMaxWidth"
+        class="fixed inset-0 z-[999] flex justify-center items-center bg-black/20"
+      >
+        <div
+          ref="model"
+          :style="dynamic_style_class"
+          class="cart-panel rounded-l-[33px] p-[20px] lg:p-[40px] border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+                w-full overflow-y-auto overflow-x-hidden lg:w-[700px] right-0 top-0 bottom-0 bg-white absolute"
+        >
+          <BaseTrafficLight
+            v-on:click.prevent="close()"
+            class="w-fit mb-[20px] lg:mb-[40px] left-[20px] top-[20px] lg:left-[40px] lg:top-[40px] absolute"
+          />
+
           <slot />
         </div>
       </div>
@@ -37,12 +58,14 @@
 import BackdropOverlay from "~/components/models/BackdropOverlay.vue";
 import BaseTrafficLight from "~/components/base/TrafficLight.vue";
 import * as VueUse from "@vueuse/core";
+import * as BaseModel from "~/src/BaseModel";
 import { useTemplateRef } from "vue";
 
 const visible = defineModel<boolean>("visible", { default: false });
 
 interface Props {
   visible: boolean,
+  variant?: BaseModel.Variant,
   persistence?: boolean,
   claim_scroll_lock_ownership?: boolean,
   background_color?: string,
@@ -54,6 +77,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   persistence: false,
+  variant: BaseModel.Variant.Centered,
   claim_scroll_lock_ownership: false,
   max_height: "calc(100dvh - 60px)",
   max_width: "fit-content",
@@ -70,13 +94,13 @@ const dynamic_style_class = computed(() => ({
   backgroundColor: props.background_color,
 }));
 
-const close_model = (): void => {
+const close = (): void => {
   VueUse.set(visible, false);
 }
 
 VueUse.onClickOutside(useTemplateRef("model"), event => {
   if (!props.persistence) {
-    close_model();
+    close();
   }
 });
 </script>
@@ -91,5 +115,26 @@ VueUse.onClickOutside(useTemplateRef("model"), event => {
 .model-leave-to {
   transform: scale(90%);
   opacity: 0;
+}
+
+
+.cart-enter-active,
+.cart-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.cart-enter-from,
+.cart-leave-to {
+  opacity: 0;
+}
+
+.cart-enter-active .cart-panel,
+.cart-leave-active .cart-panel {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-enter-from .cart-panel,
+.cart-leave-to .cart-panel {
+  transform: translateX(100%);
 }
 </style>

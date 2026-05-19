@@ -43,7 +43,7 @@ const internal_prods: Product[] = [
     id: 3,
     price: 6769,
     name: "Pokey",
-    description: ";jqwrh;uowehu;wqhouthou;wqthou;qwtwq",
+    description: ";jqwrh ;uowe hu;wqh outhou;wq thou;qwt wq",
     headshot_image_url: "/products/pokey.png",
     legal_information: [
       "Hand-wash only",
