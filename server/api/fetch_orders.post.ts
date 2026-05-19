@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
       return {success: false, data: {message: "Invalid"}};
     }
 
-    if (token !== "k!pp(PCTR1d~VZfaJQ%*xixTfBO$9XlG1iR_£3##,£UT9.'G?M>7uO'aP~q+aqn&(@u1JNN1A9Sxc{;8B6>e6=qD6Q.kK[-,Rf") {
+    if (token !== "eSu3Ufu94u4yKvS2USj9qjCZM02jefL8W3UWLvCCvxxrW7F4rrC0BV7FmSf4KpcNNyc2EPWiCRyVhadSVLN3vjAyuxzV8rexGy5a") {
       setResponseStatus(event, 400);
       return {success: false, data: {message: "Invalid"}};
     }
