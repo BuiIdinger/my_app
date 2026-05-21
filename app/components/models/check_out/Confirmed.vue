@@ -6,7 +6,7 @@
 
     <div class="w-full">
       <div class="font-bold text-[24px] text-center py-[80px] w-[75%] mx-auto">
-        <p>Your pre-order has been confirmed, please check your email for more additional on payment, and pick up.</p>
+        <p>Your pre-order has been confirmed, please check your email in 1-5 minutes for more additional on payment, and pick up.</p>
       </div>
 
       <button

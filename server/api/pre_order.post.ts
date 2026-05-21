@@ -67,10 +67,6 @@ export default defineEventHandler(async (event) => {
       new Date().toISOString()
     ).run();
 
-    const formatPrice = (priceInCents: number): string => {
-      return `$${(priceInCents / 100).toFixed(2)}`;
-    };
-
     /// Email HTML is all AI generated, because wtf are we doing in 2026 using
     /// the most legacy shit ever
     const productRowsHtml: string = products.map((product: Product): string => {
@@ -87,7 +83,7 @@ export default defineEventHandler(async (event) => {
                     ${product.name}
                   </td>
                   <td align="right" valign="middle" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 24px; font-weight: 900; color: #000000;">
-                    ${formatPrice(product.price)}
+                    ${product.price}
                   </td>
                 </tr>
               </table>
