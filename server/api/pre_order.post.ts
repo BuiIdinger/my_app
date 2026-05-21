@@ -126,7 +126,7 @@ export default defineEventHandler(async (event) => {
             <td style="padding: 30px;">
               <h3 style="margin: 0 0 10px 0; font-size: 28px; font-weight: bold; color: #000000;">How to pick up?</h3>
               <p style="margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; color: #000000;">
-                Pick ups are available on market day one (27<sup>th</sup> May), come find our booth during the market day and ask to pickup an order.
+                Pick ups are available on market day, come find our booth during the market day and ask to pickup an order.
               </p>
             </td>
           </tr>
@@ -137,7 +137,7 @@ export default defineEventHandler(async (event) => {
             <td style="padding: 30px;">
               <h3 style="margin: 0 0 10px 0; font-size: 28px; font-weight: bold; color: #000000;">Payment</h3>
               <p style="margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; color: #000000;">
-                We accept cash & card for payment. Payment is completed on pickup on market day.
+                We only accept cash payment. Payment is completed on pickup on market day.
               </p>
             </td>
           </tr>
@@ -159,7 +159,7 @@ export default defineEventHandler(async (event) => {
             <td style="padding: 30px;">
               <h3 style="margin: 0 0 10px 0; font-size: 28px; font-weight: bold; color: #000000;">Need help?</h3>
               <p style="margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; color: #000000;">
-                Shoot us a DM on Instagram @flufflings_bdsc.
+                Shoot us a DM on Instagram @flufflings_bdsc, or contact us via our website.
               </p>
             </td>
           </tr>
