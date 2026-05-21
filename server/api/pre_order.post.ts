@@ -13,7 +13,11 @@ export interface Product {
 export default defineEventHandler(async (event) => {
   /// Fetch tokens, could more or less be rather more efficient, but TypeScript, and the
   /// Node.js runtime is somthing more to worry about
-  const cloudflareEnv = event.context.cloudflare?.env || (globalThis as any).__miniflare__?.bindings;
+  const cloudflareEnv =
+    event.context.cloudflare?.env ||
+    (event.context as any).nitro?.env ||
+    (globalThis as any).__miniflare__?.bindings;
+
   const db = cloudflareEnv?.db;
   if (!db) {
     setResponseStatus(event, 500);

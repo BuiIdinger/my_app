@@ -17,13 +17,14 @@ export default defineNuxtConfig({
     },
     provider: "ipx",
   },
-  /*
   app: {
-    pageTransition: {
-      name: "page",
-      mode: "out-in",
-    },
-  }, */
+    head: {
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/brandmarks/64x64.png" },
+        { rel: "apple-touch-icon", href: "/brandmarks/512x512.png" }
+      ]
+    }
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
   modules: ['@nuxt/image', '@nuxtjs/tailwindcss'],

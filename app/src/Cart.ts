@@ -27,14 +27,12 @@ export const status: WritableComputedRef<boolean> = computed<boolean>({
 });
 
 const save_cart = (): void => {
-  console.debug("saving newly updated cart");
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cart_products.value));
 }
 
 const get_initial_cart = (): Product[] => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    console.debug("got existing saved cart");
     return saved ? JSON.parse(saved) : [];
   } catch (error) {
     Notification.open("Failed to load existing saved cart");
@@ -65,6 +63,7 @@ export const delete_cart = (): void => {
 export const remove = (index: number): void => {
   cart_products.value.splice(index, 1);
   save_cart();
+  Notification.open("Removed item from cart");
 }
 
 export const check_out = (): void => {

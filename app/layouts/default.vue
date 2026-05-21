@@ -23,7 +23,7 @@ import Cart from "~/components/cart/Cart.vue";
 import BaseHeader from "~/components/base/header/Header.vue";
 import BaseFooter from "~/components/base/footer/Footer.vue";
 import LoadingScreen from "~/components/loading-screen/LoadingScreen.vue";
-import BaseHamburgerMenu from "~/components/base/header/Hamburger.vue";
+import BaseHamburgerMenu from "~/components/base/header/hamburger/Hamburger.vue";
 import ModelsProductPreview from "~/components/models/product_preview/ProductPreview.vue";
 import ModelsContactUs from "~/components/models/contact_us/ContactUs.vue";
 import ModelsCheckOut from "~/components/models/check_out/CheckOut.vue";

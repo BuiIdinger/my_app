@@ -31,20 +31,25 @@
       </div>
     </Transition>
 
-    <Transition name="cart" mode="out-in">
+    <Transition
+      name="cart"
+      mode="out-in"
+    >
       <div
         v-if="props.visible && props.variant === BaseModel.Variant.AlignedFixedRightTopDownMaxWidth"
         class="fixed inset-0 z-[999] flex justify-center items-center bg-black/20"
       >
         <div
           ref="model"
-          :style="dynamic_style_class"
-          class="cart-panel rounded-l-[33px] p-[20px] lg:p-[40px] border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
-                w-full overflow-y-auto overflow-x-hidden lg:w-[700px] right-0 top-0 bottom-0 bg-white absolute"
+          class="cart-panel rounded-none lg:rounded-l-[33px] p-[20px] lg:p-[40px]
+                 lg:border-y-[4px] lg:border-l-[4px] border-black
+                 overflow-y-auto overflow-x-hidden h-full top-0 bottom-0 bg-white absolute
+                 w-full left-0 right-0 lg:w-[700px] lg:left-auto lg:right-0"
         >
           <BaseTrafficLight
             v-on:click.prevent="close()"
-            class="w-fit mb-[20px] lg:mb-[40px] left-[20px] top-[20px] lg:left-[40px] lg:top-[40px] absolute"
+            class="w-fit mb-[20px] lg:mb-[40px] left-[20px] top-[20px] lg:left-[40px] lg:top-[40px] absolute
+                   z-[10] cursor-pointer"
           />
 
           <slot />

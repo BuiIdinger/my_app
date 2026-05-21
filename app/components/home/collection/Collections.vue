@@ -34,7 +34,5 @@
 </template>
 
 <script setup lang="ts">
-import BaseTrafficLight from "~/components/base/TrafficLight.vue";
-import Collection from "./Collection.vue";
 import SectionBlend from "./SectionBlend.vue";
 </script>

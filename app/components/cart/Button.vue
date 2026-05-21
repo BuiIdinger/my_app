@@ -1,6 +1,6 @@
 <template>
   <button
-    @click.prevent="Cart.open()"
+    v-on:click.prevent="Cart.open()"
     class="flex border-[3.2px] bg-white border-black rounded-full justify-between h-[44px] cursor-pointer
            hover:translate-y-[4px] duration-300 flex-shrink-0
            items-center px-[20px] font-bold text-[16px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"

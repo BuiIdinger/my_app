@@ -11,11 +11,11 @@
       <!-- Product information -->
       <Details
         :product="ProductPreview.active_product.value"
-        class="flex lg:w-[50%]"
+        class="flex lg:max-w-[50%]"
       />
 
       <!-- Product slideshow -->
-      <Slideshow class="hidden lg:w-[50%] w-full lg:block" />
+      <Slideshow class="hidden lg:max-w-[50%] w-full lg:block" />
     </div>
   </BaseModel>
 </template>

@@ -28,8 +28,6 @@ onMounted(() => {
   if (props.claim_scroll_lock_ownership) {
     BaseModel.claim_ownership();
   }
-
-  console.error(BaseModel.has_owner());
 });
 
 onUnmounted(() => {

@@ -5,14 +5,14 @@
     <div class="border-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-[22px]
                 p-[20px] lg:p-[40px] border-black font-black h-full text-wrap"
     >
-      <p>{{ props.product.description }}</p>
+      <p class="w-[640px]"> {{ props.product.description }}</p>
     </div>
 
     <!-- Legal information for product -->
     <ul class="border-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-[22px]
                p-[20px] lg:p-[40px] border-black font-black"
     >
-      <li v-for="legal_detail in props.product.legal_information">{{ legal_detail }}</li>
+      <li v-for="legal_detail in props.product.legal_information">• {{ legal_detail }}</li>
     </ul>
 
     <BaseButton

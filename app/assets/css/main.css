@@ -12,6 +12,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+body {
+  @apply antialiased bg-white;
+}
+
+input, textarea, button, select, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 svg {
   shape-rendering: geometricPrecision;
 }
@@ -64,24 +72,20 @@ svg {
 } */
 
 @theme {
-    --color-mint-500: oklch(0.72 0.11 178);
-    --animate-float: float-subtle 7s ease-in-out infinite;
+  --color-mint-500: oklch(0.72 0.11 178);
+  --animate-float: float-subtle 7s ease-in-out infinite;
 
-    @keyframes float-subtle {
-        0%, 100% {
-            transform: translate(0, 0) rotate(0deg);
-        }
-        33% {
-            transform: translate(10px, -15px) rotate(2deg);
-        }
-        66% {
-            transform: translate(-8px, 8px) rotate(-1deg);
-        }
+  @keyframes float-subtle {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
     }
+    33% {
+      transform: translate(10px, -15px) rotate(2deg);
+    }
+    66% {
+      transform: translate(-8px, 8px) rotate(-1deg);
+    }
+  }
 
-    --spacing-1712: 1712px;
-}
-
-body {
-    @apply antialiased bg-white;
+  --spacing-1712: 1712px;
 }

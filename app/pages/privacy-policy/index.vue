@@ -45,14 +45,18 @@
       </div>
 
       <div>
-        <h2 class="font-bold text-[28px] lg:text-[50px] mb-[8px]">5. Cookies and Technical Tracking</h2>
-        <p>To ensure the marketplace functions smoothly, we use cookies and local browser storage. These are required to handle system states, stallholder authentication, user sessions, and shopping cart functions. While you can disable cookies in your browser settings, doing so may cause certain parts of the College Market Day website to break or become unavailable.</p>
-      </div>
-
-      <div>
-        <h2 class="font-bold text-[28px] lg:text-[50px] mb-[8px]">6. Mandatory Privacy Breach Notification</h2>
+        <h2 class="font-bold text-[28px] lg:text-[50px] mb-[8px]">5. Mandatory Privacy Breach Notification</h2>
         <p>In accordance with the New Zealand Privacy Act 2020, if we become aware of a security or data breach involving our infrastructure that has caused—or is highly likely to cause—serious harm to any individual, we will immediately contain the breach and notify the New Zealand Office of the Privacy Commissioner and all affected users without undue delay.</p>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+useSeoMeta({
+  title: "Privacy Policy",
+  ogTitle: "Privacy Policy",
+  description: "Privacy Policy of Flufflings website usage.",
+  ogDescription: "Privacy Policy of Flufflings website usage.",
+});
+</script>

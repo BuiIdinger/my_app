@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[14px] lg:mx-[40px] pt-[200px] lg:pt-[300px] relative z-[10]">
+  <div class="mx-[14px] lg:mx-[40px] pt-[0px] lg:pt-[200px] relative z-[10]">
 
     <div class="flex justify-center">
       <BaseButton
@@ -78,7 +78,11 @@
           <p>Copyright © Flufflings 2026. All rights reserved. </p>
         </div>
 
-        <p>SS → | TBC</p>
+        <!-- HeHe -->
+        <div class="flex items-center gap-x-[10px]">
+          <p>SS →</p>
+          <TheBuildingerCompanyBrandmark class="w-auto h-[24px]" />
+        </div>
       </div>
     </footer>
   </div>
@@ -89,6 +93,7 @@ import BaseSmiley from "~/components/base/Smiley.vue";
 import BaseHearts from "~/components/base/Hearts.vue";
 import InstagramGlyph from "~/components/svg_glyphs/Instagram.vue";
 import BaseButton from "~/components/base/Button.vue";
+import TheBuildingerCompanyBrandmark from "~/components/TheBuildingerCompanyBrandmark.vue";
 import * as ContactUsModel from "~/src/models/ContactUs";
 import * as BaseButtonLogic from "~/src/BaseButton";
 

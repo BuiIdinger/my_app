@@ -28,12 +28,7 @@
     <div class="text-[18px] lg:text-[30px] font-black max-w-[736px] leading-snug">
       <h2>
         Shop from our wide collections of unique handcrafted plushies.
-        Every single one of our
-
-<!--        <span class="bg-[#ffbfd3] px-[8px] border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] mx-1 inline-block">-->
-          plushies is made entirely out of socks
-<!--        </span>-->
-
+        Every single one of our plushies is made entirely out of socks
         to give them that extra cozy, quirky feel.
       </h2>
     </div>
@@ -81,7 +76,7 @@
 
         <div class="flex flex-wrap justify-center gap-[20px] lg:gap-[65px]">
           <ProductCard
-            v-for="product in get(Products.products)"
+            v-for="product in VueUse.get(Products.products)"
             :product="product"
           />
         </div>
@@ -89,7 +84,6 @@
     </div>
   </div>
   <SpikeGlyph class="rotate-[180deg]" />
-
 </template>
 
 <script setup lang="ts">
@@ -97,8 +91,14 @@ import BaseStarCluster from "~/components/base/StarCluster.vue";
 import crown_glyph from "~/components/svg_glyphs/crown.vue";
 import TrafficLight from "~/components/base/TrafficLight.vue";
 import ProductCard from "~/components/shop_all/card.vue";
-import SpikeGlyph from "~/components/svg_glyphs/Spike";
-import * as ProductPreview from "~/src/models/ProductPreview";
+import SpikeGlyph from "~/components/svg_glyphs/Spike.vue";
 import * as Products from "~/src/Product";
-import { get } from "@vueuse/core";
+import * as VueUse from "@vueuse/core";
+
+useSeoMeta({
+  title: "Shop the Collection",
+  ogTitle: "Shop the Collection",
+  description: "Shop our wide range of adorable plushies, perfect as a gift, or for yourself.",
+  ogDescription: "Shop our wide range of adorable plushies, perfect as a gift, or for yourself.",
+});
 </script>

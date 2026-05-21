@@ -7,7 +7,7 @@
       <div
         v-if="VueUse.get(Notification.status)"
         @click.prevent="Notification.close()"
-        class="fixed top-[25px] left-0 right-0 z-[999] mx-auto flex justify-center items-center cursor-pointer"
+        class="fixed top-[25px] left-0 right-0 z-[9999] mx-auto flex justify-center items-center cursor-pointer"
       >
         <div
           ref="model"

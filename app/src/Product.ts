@@ -13,13 +13,15 @@ export interface Product {
 const internal_prods: Product[] = [
   {
     id: 1,
-    price: 6769,
-    name: "Miffy",
-    description: "Miffy is the softest, most cudeable companianl ",
+    price: 6.00,
+    name: "Bunny",
+    description: "Meet Bunny, a super fluffy white plushie handmade by our team! Featuring a cute blue ribbon bow, it's budget-friendly, eco-friendly, and perfect to clip onto your school bag or keep on your desk.",
     headshot_image_url: "/products/miffy.png",
     legal_information: [
-      "Hand-wash only",
-      "Fragile: handle with care",
+      "Warm hand wash or gentle machine wash in a laundry bag",
+      "Do not tumble dry (or: Line dry in shade)",
+      "Do not iron",
+      "Do not dry-clean",
     ],
     slideshow_images_url: [
       "/products/miffy.png",
@@ -27,13 +29,15 @@ const internal_prods: Product[] = [
   },
   {
     id: 2,
-    price: 6769,
+    price: 6.00,
     name: "Cat",
-    description: "Cat is the softest, most cuteable",
+    description: "Meet Cat, a super soft and fluffy pink and red plushie handmade by our team! Featuring a cute little golden collar bell, it's budget-friendly, eco-friendly, and perfect to keep on your desk or take with you anywhere.",
     headshot_image_url: "/products/cat.png",
     legal_information: [
-      "Hand-wash only",
-      "Fragile: handle with care",
+      "Warm hand wash or gentle machine wash in a laundry bag",
+      "Do not tumble dry (or: Line dry in shade)",
+      "Do not iron",
+      "Do not dry-clean",
     ],
     slideshow_images_url: [
       "/products/cat.png",
@@ -41,44 +45,34 @@ const internal_prods: Product[] = [
   },
   {
     id: 3,
-    price: 6769,
-    name: "Pokey",
-    description: ";jqwrh ;uowe hu;wqh outhou;wq thou;qwt wq",
+    price: 5.50,
+    name: "Koala",
+    description: "Meet Pokey, an incredibly fluffy pink koala plushie handmade by our team! With its sweet rosy cheeks and big fuzzy nose, it's eco-friendly, budget-friendly, and ready to bring total comfort to your room.",
     headshot_image_url: "/products/pokey.png",
     legal_information: [
-      "Hand-wash only",
-      "Fragile: handle with care",
+      "Warm hand wash or gentle machine wash in a laundry bag",
+      "Do not tumble dry (or: Line dry in shade)",
+      "Do not iron",
+      "Do not dry-clean",
     ],
     slideshow_images_url: [
       "/products/pokey.png",
     ]
   },
   {
-    id: 4,
-    price: 6769,
-    name: "Teddy",
-    description: ";jqwrh;uowehu;wqhouthou;wqthou;qwtwq",
-    headshot_image_url: "/products/teddy.png",
-    legal_information: [
-      "Hand-wash only",
-      "Fragile: handle with care",
-    ],
-    slideshow_images_url: [
-      "/products/teddy.png",
-    ]
-  },
-  {
     id: 5,
-    price: 6769,
-    name: "LogRoll Bruh",
-    description: ";jqwrh;uowehu;wqhouthou;wqthou;qwtwq",
-    headshot_image_url: "/products/log_roll.png",
+    price: 4.50,
+    name: "Seal",
+    description: "Meet Seal, a super cute, spotted round plushie handmade by our team! With its sweet rosy cheeks and perfectly squishable shape, it's eco-friendly, budget-friendly, and the ultimate comfort companion for your desk or bed.",
+    headshot_image_url: "/products/seal.png",
     legal_information: [
-      "Hand-wash only",
-      "Fragile: handle with care",
+      "Warm hand wash or gentle machine wash in a laundry bag",
+      "Do not tumble dry (or: Line dry in shade)",
+      "Do not iron",
+      "Do not dry-clean",
     ],
     slideshow_images_url: [
-      "/products/log_roll.png",
+      "/products/seal.png",
     ]
   },
 ];

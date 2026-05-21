@@ -1,5 +1,3 @@
-<script setup lang="ts">
-</script>
 <template>
   <div class="mx-auto max-w-[1524px] mt-[300px] px-4">
     <div class="font-black text-[60px]">
@@ -62,3 +60,12 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+useSeoMeta({
+  title: "Terms and Conditions",
+  ogTitle: "Terms and Conditions",
+  description: "Terms and Conditions of Flufflings website usage.",
+  ogDescription: "Terms and Conditions of Flufflings website usage.",
+});
+</script>
